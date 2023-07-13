@@ -2868,6 +2868,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI_BG
       objectReference: {fileID: 0}
+    - target: {fileID: 4356165640139756783, guid: 173d191e52f46b14ba961047ac568d30,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 8a4e2241a788c094f83bb5b61ba584b1, type: 2}
     - target: {fileID: 8706917050953288687, guid: 173d191e52f46b14ba961047ac568d30,
         type: 3}
       propertyPath: m_Pivot.x
