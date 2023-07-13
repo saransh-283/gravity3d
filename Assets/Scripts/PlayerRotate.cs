@@ -4,7 +4,13 @@ using UnityEngine;
 public class PlayerRotate : MonoBehaviour
 {
     public float rotationSpeed = 10f;
+    public GameObject hologramPrefab;
     GameController gameControllerInstance;
+
+    Quaternion targetRotation;
+    Vector3 newGravity;
+    bool isHologramVisible = false;
+    GameObject hologramInstance;
 
     private void Start()
     {
@@ -15,42 +21,45 @@ public class PlayerRotate : MonoBehaviour
     {
         if (!gameControllerInstance.isPaused)
         {
-            if (Input.GetKeyUp(KeyCode.RightArrow))
+            if (Input.GetKeyDown(KeyCode.Return))
             {
-                RotateRight();
-                Physics.gravity = transform.right * gameControllerInstance.G;
-                HologramRotate.DestroyHologram();
+                StartCoroutine(SmoothRotate.instance.SmoothRotation(transform, targetRotation, rotationSpeed));
+                Physics.gravity = newGravity * GameController.instance.G;
+                DestroyHologram();
             }
-            else if (Input.GetKeyUp(KeyCode.LeftArrow))
+            if(Input.GetKeyDown(KeyCode.RightArrow))
             {
-                RotateLeft();
-                Physics.gravity = -transform.right * gameControllerInstance.G;
-                HologramRotate.DestroyHologram();
+                targetRotation = transform.rotation * Quaternion.Euler(0f, 0f, 90f);
+                newGravity = transform.right;
+                SmoothRotateHologram(targetRotation);
             }
-            else if (Input.GetKeyUp(KeyCode.UpArrow))
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                RotateUp();
-                Physics.gravity = transform.up * gameControllerInstance.G;
-                HologramRotate.DestroyHologram();
+                targetRotation = transform.rotation * Quaternion.Euler(0f, 0f, -90f);
+                newGravity = -transform.right;
+                SmoothRotateHologram(targetRotation);
+            }
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                targetRotation = transform.rotation * Quaternion.Euler(0f, 0f, 180f);
+                newGravity = transform.up;
+                SmoothRotateHologram(targetRotation);
             }
         }
     }
 
-    void RotateRight()
+    void DestroyHologram()
     {
-        Quaternion targetRotation = transform.rotation * Quaternion.Euler(0f, 0f, 90f);
-        StartCoroutine(SmoothRotate.instance.SmoothRotation(transform, targetRotation, rotationSpeed));
+        isHologramVisible = false;
+        Destroy(hologramInstance);
     }
 
-    void RotateLeft()
+    void SmoothRotateHologram(Quaternion targetRotation)
     {
-        Quaternion targetRotation = transform.rotation * Quaternion.Euler(0f, 0f, -90f);
-        StartCoroutine(SmoothRotate.instance.SmoothRotation(transform, targetRotation, rotationSpeed));
-    }
+        isHologramVisible = true;
+        hologramInstance = Instantiate(hologramPrefab, transform.position, transform.rotation);
+        hologramInstance.transform.parent = transform;
 
-    void RotateUp()
-    {
-        Quaternion targetRotation = transform.rotation * Quaternion.Euler(0f, 0f, 180f);
-        StartCoroutine(SmoothRotate.instance.SmoothRotation(transform, targetRotation, rotationSpeed));
+        StartCoroutine(SmoothRotate.instance.SmoothRotation(hologramInstance.transform, targetRotation, rotationSpeed));
     }
 }
