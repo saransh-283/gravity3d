@@ -11,7 +11,7 @@ public class SmoothRotate : MonoBehaviour
         instance = this;
     }
 
-    public IEnumerator SmoothRotation(Transform transform, Quaternion targetRotation, float rotationSpeed)
+    public IEnumerator SmoothRotation(Transform transform, Quaternion targetRotation, float rotationSpeed, System.Action callback = null)
     {
         Quaternion initialRotation = transform.rotation;
         float elapsedTime = 0f;
@@ -24,5 +24,7 @@ public class SmoothRotate : MonoBehaviour
         }
 
         transform.rotation = targetRotation;
+
+        callback?.Invoke();
     }
 }

@@ -9,7 +9,6 @@ public class PlayerRotate : MonoBehaviour
 
     Quaternion targetRotation;
     Vector3 newGravity;
-    bool isHologramVisible = false;
     GameObject hologramInstance;
 
     private void Start()
@@ -35,7 +34,7 @@ public class PlayerRotate : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                targetRotation = transform.rotation * Quaternion.Euler(0f, 0f, -90f);
+                targetRotation = transform.rotation * Quaternion.Euler(0f, 0f, 270f);
                 newGravity = -transform.right;
                 SmoothRotateHologram(targetRotation);
             }
@@ -45,20 +44,27 @@ public class PlayerRotate : MonoBehaviour
                 newGravity = transform.up;
                 SmoothRotateHologram(targetRotation);
             }
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                targetRotation = transform.rotation;
+                newGravity = -transform.up;
+                StartCoroutine(SmoothRotate.instance.SmoothRotation(hologramInstance.transform, targetRotation, rotationSpeed, DestroyHologram));
+            }
         }
     }
 
     void DestroyHologram()
     {
-        isHologramVisible = false;
         Destroy(hologramInstance);
     }
 
     void SmoothRotateHologram(Quaternion targetRotation)
     {
-        isHologramVisible = true;
-        hologramInstance = Instantiate(hologramPrefab, transform.position, transform.rotation);
-        hologramInstance.transform.parent = transform;
+        if (hologramInstance == null)
+        {
+            hologramInstance = Instantiate(hologramPrefab, transform.position, transform.rotation);
+            hologramInstance.transform.parent = transform;
+        }
 
         StartCoroutine(SmoothRotate.instance.SmoothRotation(hologramInstance.transform, targetRotation, rotationSpeed));
     }
