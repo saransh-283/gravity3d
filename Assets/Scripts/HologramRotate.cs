@@ -32,19 +32,19 @@ public class HologramRotate : MonoBehaviour
     void RotateRight()
     {
         Quaternion targetRotation = transform.rotation * Quaternion.Euler(0f, 0f, 90f);
-        StartCoroutine(SmoothRotate(targetRotation));
+        SmoothRotation(targetRotation);
     }
 
     void RotateLeft()
     {
         Quaternion targetRotation = transform.rotation * Quaternion.Euler(0f, 0f, -90f);
-        StartCoroutine(SmoothRotate(targetRotation));
+        SmoothRotation(targetRotation);
     }
 
     void RotateTop()
     {
         Quaternion targetRotation = transform.rotation * Quaternion.Euler(0f, 0f, 180f);
-        StartCoroutine(SmoothRotate(targetRotation));
+        SmoothRotation(targetRotation);
     }
 
     public static void DestroyHologram()
@@ -53,21 +53,12 @@ public class HologramRotate : MonoBehaviour
         Destroy(hologramInstance);
     }
 
-    IEnumerator SmoothRotate(Quaternion targetRotation)
+    void SmoothRotation(Quaternion targetRotation)
     {
         isHologramVisible = true;
         hologramInstance = Instantiate(hologramPrefab, transform.position, transform.rotation);
         hologramInstance.transform.parent = transform;
-        Quaternion initialRotation = hologramInstance.transform.rotation;
-        float elapsedTime = 0f;
 
-        while (elapsedTime < 1f)
-        {
-            elapsedTime += Time.deltaTime * rotationSpeed;
-            hologramInstance.transform.rotation = Quaternion.Lerp(initialRotation, targetRotation, elapsedTime);
-            yield return null;
-        }
-
-        hologramInstance.transform.rotation = targetRotation;
+        StartCoroutine(SmoothRotate.instance.SmoothRotation(hologramInstance.transform, targetRotation, rotationSpeed));
     }
 }

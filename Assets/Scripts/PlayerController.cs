@@ -28,17 +28,17 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.A))
             {
                 Quaternion targetRotation = transform.rotation * Quaternion.Euler(0f, -90f, 0f);
-                StartCoroutine(SmoothRotate(targetRotation));
+                StartCoroutine(SmoothRotate.instance.SmoothRotation(transform, targetRotation, turnSpeed));
             }
             if (Input.GetKeyDown(KeyCode.D))
             {
                 Quaternion targetRotation = transform.rotation * Quaternion.Euler(0f, 90f, 0f);
-                StartCoroutine(SmoothRotate(targetRotation));
+                StartCoroutine(SmoothRotate.instance.SmoothRotation(transform, targetRotation, turnSpeed));
             }
             if (Input.GetKeyDown(KeyCode.S))
             {
                 Quaternion targetRotation = transform.rotation * Quaternion.Euler(0f, 180f, 0f);
-                StartCoroutine(SmoothRotate(targetRotation));
+                StartCoroutine(SmoothRotate.instance.SmoothRotation(transform, targetRotation, turnSpeed));
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -49,21 +49,6 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-    }
-
-    IEnumerator SmoothRotate(Quaternion targetRotation)
-    {
-        Quaternion initialRotation = transform.rotation;
-        float elapsedTime = 0f;
-
-        while (elapsedTime < 1f)
-        {
-            elapsedTime += Time.deltaTime * turnSpeed;
-            transform.rotation = Quaternion.Lerp(initialRotation, targetRotation, elapsedTime);
-            yield return null;
-        }
-
-        transform.rotation = targetRotation; // Ensure the final rotation matches the target
     }
 
     private void OnCollisionEnter(Collision collision)

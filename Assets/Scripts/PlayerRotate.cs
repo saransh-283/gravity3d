@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class ObjectRotation : MonoBehaviour
+public class PlayerRotate : MonoBehaviour
 {
     public float rotationSpeed = 10f;
     GameController gameControllerInstance;
@@ -10,6 +10,7 @@ public class ObjectRotation : MonoBehaviour
     {
         gameControllerInstance = GameController.instance;
     }
+
     void Update()
     {
         if (!gameControllerInstance.isPaused)
@@ -38,33 +39,18 @@ public class ObjectRotation : MonoBehaviour
     void RotateRight()
     {
         Quaternion targetRotation = transform.rotation * Quaternion.Euler(0f, 0f, 90f);
-        StartCoroutine(SmoothRotate(targetRotation));
+        StartCoroutine(SmoothRotate.instance.SmoothRotation(transform, targetRotation, rotationSpeed));
     }
 
     void RotateLeft()
     {
         Quaternion targetRotation = transform.rotation * Quaternion.Euler(0f, 0f, -90f);
-        StartCoroutine(SmoothRotate(targetRotation));
+        StartCoroutine(SmoothRotate.instance.SmoothRotation(transform, targetRotation, rotationSpeed));
     }
 
     void RotateUp()
     {
         Quaternion targetRotation = transform.rotation * Quaternion.Euler(0f, 0f, 180f);
-        StartCoroutine(SmoothRotate(targetRotation));
-    }
-
-    IEnumerator SmoothRotate(Quaternion targetRotation)
-    {
-        Quaternion initialRotation = transform.rotation;
-        float elapsedTime = 0f;
-
-        while (elapsedTime < 1f)
-        {
-            elapsedTime += Time.deltaTime * rotationSpeed;
-            transform.rotation = Quaternion.Lerp(initialRotation, targetRotation, elapsedTime);
-            yield return null;
-        }
-
-        transform.rotation = targetRotation; // Ensure the final rotation matches the target
+        StartCoroutine(SmoothRotate.instance.SmoothRotation(transform, targetRotation, rotationSpeed));
     }
 }
