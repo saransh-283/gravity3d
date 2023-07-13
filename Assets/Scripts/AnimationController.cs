@@ -7,12 +7,14 @@ public class AnimationController : MonoBehaviour
     private bool isFalling;
     private bool isRunning;
 
+    // Animation parameter names
     string IS_RUNNING = "isRunning";
     string IS_IDLE = "isIdle";
     string IS_FALLING = "isFalling";
 
     private void Start()
     {
+        // Get the Animator component from the GameObject this script is attached to
         animator = GetComponent<Animator>();
     }
 

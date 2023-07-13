@@ -2,19 +2,19 @@ using UnityEngine;
 
 public class CameraRotate : MonoBehaviour
 {
-    public float sensitivity = 5f;
+    public float sensitivity = 5f; // The sensitivity of the mouse movement
 
-    private float rotationX = 0f;
-    private float rotationY = 0f;
+    private float rotationX = 0f; // The current rotation around the X-axis
+    private float rotationY = 0f; // The current rotation around the Y-axis
 
-    float minX = -60f;
-    float maxX = 60f;
-    float minY = -60f;
-    float maxY = 60f;
+    float minX = -60f; // The minimum rotation limit around the X-axis
+    float maxX = 60f; // The maximum rotation limit around the X-axis
+    float minY = -60f; // The minimum rotation limit around the Y-axis
+    float maxY = 60f; // The maximum rotation limit around the Y-axis
 
     private void Update()
     {
-        if (!GameController.instance.isPaused)
+        if (!GameController.instance.isPaused) // Check if the game is not paused
         {
             // Get mouse movement
             float mouseX = Input.GetAxis("Mouse X") * sensitivity;
