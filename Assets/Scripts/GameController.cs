@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
     public int collected = 0;
     public float G = 50f;
     public bool isPaused = false;
-    public float timer = 1000; // In seconds
+    public float timer = 120; // In seconds
     public int gameStatus = 0; // 0 = playing, 1 = success, -1 = failed
 
     public TextMeshProUGUI timeComponent;
