@@ -8,6 +8,10 @@ public class PlayerController : MonoBehaviour
     private float jumpForce = 10f;
     public float turnSpeed = 2f;
 
+    Quaternion right = Quaternion.Euler(0f, 90f, 0f);
+    Quaternion left = Quaternion.Euler(0f, -90f, 0f);
+    Quaternion behind = Quaternion.Euler(0f, 180f, 0f);
+
     public static bool isFalling = false;
 
     private Rigidbody myBody;
@@ -27,17 +31,17 @@ public class PlayerController : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.A))
             {
-                Quaternion targetRotation = transform.rotation * Quaternion.Euler(0f, -90f, 0f);
+                Quaternion targetRotation = transform.rotation * left;
                 StartCoroutine(SmoothRotate.instance.SmoothRotation(transform, targetRotation, turnSpeed));
             }
             if (Input.GetKeyDown(KeyCode.D))
             {
-                Quaternion targetRotation = transform.rotation * Quaternion.Euler(0f, 90f, 0f);
+                Quaternion targetRotation = transform.rotation * right;
                 StartCoroutine(SmoothRotate.instance.SmoothRotation(transform, targetRotation, turnSpeed));
             }
             if (Input.GetKeyDown(KeyCode.S))
             {
-                Quaternion targetRotation = transform.rotation * Quaternion.Euler(0f, 180f, 0f);
+                Quaternion targetRotation = transform.rotation * behind;
                 StartCoroutine(SmoothRotate.instance.SmoothRotation(transform, targetRotation, turnSpeed));
             }
             if (Input.GetKeyDown(KeyCode.Space))

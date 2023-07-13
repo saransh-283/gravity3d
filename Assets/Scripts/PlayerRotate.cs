@@ -8,6 +8,9 @@ public class PlayerRotate : MonoBehaviour
     GameController gameControllerInstance;
 
     Quaternion targetRotation;
+    Quaternion right = Quaternion.Euler(0f, 0f, 90f);
+    Quaternion left = Quaternion.Euler(0f, 0f, -90f);
+    Quaternion top = Quaternion.Euler(0f, 0f, 180f);
     Vector3 newGravity;
     GameObject hologramInstance;
 
@@ -28,19 +31,19 @@ public class PlayerRotate : MonoBehaviour
             }
             if(Input.GetKeyDown(KeyCode.RightArrow))
             {
-                targetRotation = transform.rotation * Quaternion.Euler(0f, 0f, 90f);
+                targetRotation = transform.rotation * right;
                 newGravity = transform.right;
                 SmoothRotateHologram(targetRotation);
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                targetRotation = transform.rotation * Quaternion.Euler(0f, 0f, 270f);
+                targetRotation = transform.rotation * left;
                 newGravity = -transform.right;
                 SmoothRotateHologram(targetRotation);
             }
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                targetRotation = transform.rotation * Quaternion.Euler(0f, 0f, 180f);
+                targetRotation = transform.rotation * top;
                 newGravity = transform.up;
                 SmoothRotateHologram(targetRotation);
             }

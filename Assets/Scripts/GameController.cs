@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
     public bool isPaused = false;
     public float timer = 120; // In seconds
     public int gameStatus = 0; // 0 = playing, 1 = success, -1 = failed
+    public int numberOfCollectibles = 10;
 
     public TextMeshProUGUI timeComponent;
     public TextMeshProUGUI collectedComponent;
@@ -36,7 +37,7 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (collected == 10 && timer > 0)
+        if (collected == numberOfCollectibles && timer > 0)
         {
             Time.timeScale = 0;
             isPaused = true;

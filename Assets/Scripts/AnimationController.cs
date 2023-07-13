@@ -7,6 +7,10 @@ public class AnimationController : MonoBehaviour
     private bool isFalling;
     private bool isRunning;
 
+    string IS_RUNNING = "isRunning";
+    string IS_IDLE = "isIdle";
+    string IS_FALLING = "isFalling";
+
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -15,20 +19,12 @@ public class AnimationController : MonoBehaviour
     private void Update()
     {
         // Check for input and set animation parameters accordingly
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
-        {
-            isRunning = true;
-        }
-        else
-        {
-            isRunning = false;
-        }
-
+        isRunning = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D);
         isIdle = !isRunning && !isFalling;
 
         // Update animator parameters
-        animator.SetBool("isRunning", isRunning);
-        animator.SetBool("isIdle", isIdle);
-        animator.SetBool("isFalling", PlayerController.isFalling);
+        animator.SetBool(IS_RUNNING, isRunning);
+        animator.SetBool(IS_IDLE, isIdle);
+        animator.SetBool(IS_FALLING, PlayerController.isFalling);
     }
 }

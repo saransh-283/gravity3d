@@ -7,6 +7,11 @@ public class CameraRotate : MonoBehaviour
     private float rotationX = 0f;
     private float rotationY = 0f;
 
+    float minX = -60f;
+    float maxX = 60f;
+    float minY = -60f;
+    float maxY = 60f;
+
     private void Update()
     {
         if (!GameController.instance.isPaused)
@@ -17,11 +22,11 @@ public class CameraRotate : MonoBehaviour
 
             // Calculate new horizontal rotation
             rotationY += mouseX;
-            rotationY = Mathf.Clamp(rotationY, -60f, 60f);
+            rotationY = Mathf.Clamp(rotationY, minY, maxY);
 
             // Calculate new vertical rotation
             rotationX -= mouseY;
-            rotationX = Mathf.Clamp(rotationX, -60f, 60f);
+            rotationX = Mathf.Clamp(rotationX, minX, maxX);
 
             // Rotate the camera based on mouse movement
             transform.localRotation = Quaternion.Euler(rotationX, rotationY, 0f);
